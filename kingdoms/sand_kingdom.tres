@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Kingdom" load_steps=2 format=3 uid="uid://dybomflhp5x73"]
+
+[ext_resource type="Script" path="res://kingdom.gd" id="1_k3hca"]
+
+[resource]
+script = ExtResource("1_k3hca")
+name = "Sand Kingdom"
+x = -12.0
+y = 94.0

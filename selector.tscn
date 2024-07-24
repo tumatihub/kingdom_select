@@ -1,0 +1,57 @@
+[gd_scene load_steps=12 format=3 uid="uid://dided205xqu4b"]
+
+[ext_resource type="Script" path="res://selector.gd" id="1_n7qpw"]
+[ext_resource type="Material" uid="uid://dwvxoiih6e7q" path="res://line_material.tres" id="2_7vuuh"]
+[ext_resource type="Texture2D" uid="uid://yu0adq382sv4" path="res://images/circle_02.png" id="3_jfwon"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_4nwlc"]
+material = ExtResource("2_7vuuh")
+
+[sub_resource type="Gradient" id="Gradient_huyin"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.195402, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gusan"]
+gradient = SubResource("Gradient_huyin")
+
+[sub_resource type="Curve" id="Curve_ypo57"]
+_data = [Vector2(0, 0), 0.0, 3.20635, 0, 0, Vector2(1, 1), 0.166484, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_raond"]
+curve = SubResource("Curve_ypo57")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vv1v3"]
+gravity = Vector3(0, 0, 0)
+scale_min = 0.8
+scale_curve = SubResource("CurveTexture_raond")
+color_ramp = SubResource("GradientTexture1D_gusan")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_houh0"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_jfwon")
+
+[sub_resource type="QuadMesh" id="QuadMesh_upsoj"]
+material = SubResource("StandardMaterial3D_houh0")
+
+[node name="Pivot" type="Node3D" node_paths=PackedStringArray("pin", "indicator_particles")]
+script = ExtResource("1_n7qpw")
+pin = NodePath("Selector")
+indicator_particles = NodePath("Selector/GPUParticles3D")
+
+[node name="Selector" type="Node3D" parent="."]
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 0, 0, 10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Selector"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("SphereMesh_4nwlc")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Selector"]
+emitting = false
+amount = 2
+lifetime = 1.1
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_vv1v3")
+draw_pass_1 = SubResource("QuadMesh_upsoj")

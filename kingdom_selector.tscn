@@ -1,0 +1,116 @@
+[gd_scene load_steps=23 format=3 uid="uid://dcwwhsxhk7bn8"]
+
+[ext_resource type="Script" path="res://kingdom_selector.gd" id="1_ys700"]
+[ext_resource type="Resource" uid="uid://dkj88rmb1o13d" path="res://kingdoms/cap_kingdom.tres" id="2_u8l2m"]
+[ext_resource type="Resource" uid="uid://dvkeqymmc8tvr" path="res://kingdoms/cascade_kingdom.tres" id="3_iocye"]
+[ext_resource type="Resource" uid="uid://b1mebbs02qhbh" path="res://kingdoms/lake_kingdom.tres" id="4_21u1h"]
+[ext_resource type="Script" path="res://camera.gd" id="5_1dvao"]
+[ext_resource type="PackedScene" uid="uid://dided205xqu4b" path="res://selector.tscn" id="5_3l45c"]
+[ext_resource type="Resource" uid="uid://dybomflhp5x73" path="res://kingdoms/sand_kingdom.tres" id="5_ui42s"]
+[ext_resource type="Resource" uid="uid://bl0ndd6fks6am" path="res://kingdoms/wooded_kingdom.tres" id="6_dmcfm"]
+[ext_resource type="Texture2D" uid="uid://c5urmwtqlq44g" path="res://images/4096_earth.jpg" id="6_o1tok"]
+[ext_resource type="Texture2D" uid="uid://bswjfu6ej1svb" path="res://images/ursa-major-ursa-minor-constellations.jpg" id="6_u3s6r"]
+[ext_resource type="PackedScene" uid="uid://b4bvu4ri3foa3" path="res://ui_selector.tscn" id="7_e55yi"]
+[ext_resource type="Texture2D" uid="uid://bmg47tam76p4w" path="res://images/4096_clouds.jpg" id="8_01v88"]
+[ext_resource type="Texture2D" uid="uid://y4brodfpuk51" path="res://images/4096_normal.jpg" id="8_jhq1k"]
+[ext_resource type="Shader" uid="uid://ce7htdha0ol71" path="res://world_glow.tres" id="10_44cb4"]
+[ext_resource type="Material" uid="uid://dwvxoiih6e7q" path="res://line_material.tres" id="12_s6kfo"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_l5rb8"]
+panorama = ExtResource("6_u3s6r")
+
+[sub_resource type="Sky" id="Sky_affoq"]
+sky_material = SubResource("PanoramaSkyMaterial_l5rb8")
+process_mode = 1
+
+[sub_resource type="Environment" id="Environment_lgqy6"]
+background_mode = 2
+background_color = Color(0.758595, 0.920015, 0.998773, 1)
+background_energy_multiplier = 0.32
+sky = SubResource("Sky_affoq")
+sky_custom_fov = 98.2
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.39
+reflected_light_source = 2
+tonemap_mode = 2
+ssao_enabled = true
+ssao_radius = 0.62
+ssao_intensity = 4.53
+ssao_power = 3.10579
+glow_enabled = true
+glow_intensity = 1.99
+glow_strength = 0.42
+glow_bloom = 0.04
+glow_blend_mode = 1
+glow_hdr_threshold = 0.0
+glow_hdr_scale = 0.52
+fog_light_color = Color(1, 1, 1, 1)
+fog_light_energy = 0.0
+fog_density = 0.0021
+fog_aerial_perspective = 0.071
+fog_sky_affect = 0.787
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_puqvo"]
+render_priority = 2
+shader = ExtResource("10_44cb4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_unpku"]
+render_priority = 1
+next_pass = SubResource("ShaderMaterial_puqvo")
+transparency = 1
+blend_mode = 1
+albedo_color = Color(1, 1, 1, 0.356863)
+albedo_texture = ExtResource("8_01v88")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rd378"]
+next_pass = SubResource("StandardMaterial3D_unpku")
+albedo_texture = ExtResource("6_o1tok")
+metallic_specular = 0.36
+roughness = 0.42
+emission_enabled = true
+emission = Color(0, 0.0836839, 0.0950793, 1)
+normal_enabled = true
+normal_texture = ExtResource("8_jhq1k")
+
+[sub_resource type="SphereMesh" id="SphereMesh_1dbgm"]
+material = SubResource("StandardMaterial3D_rd378")
+radius = 10.0
+height = 20.0
+
+[node name="KingdomSelector" type="Node3D" node_paths=PackedStringArray("world", "camera", "ui_selector")]
+script = ExtResource("1_ys700")
+kingdom_list = Array[Resource("res://kingdom.gd")]([ExtResource("2_u8l2m"), ExtResource("3_iocye"), ExtResource("5_ui42s"), ExtResource("4_21u1h"), ExtResource("6_dmcfm")])
+selector_scene = ExtResource("5_3l45c")
+world = NodePath("World")
+camera = NodePath("World/Camera")
+ui_selector = NodePath("UISelector")
+line_material = ExtResource("12_s6kfo")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lgqy6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.618881, 0.23821, 0.748493, 0.489296, -0.628529, 0.604599, 0.614471, 0.74041, 0.272429, 0, 0, 0)
+shadow_enabled = true
+
+[node name="World" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_1dbgm")
+
+[node name="Camera" type="Node3D" parent="World"]
+script = ExtResource("5_1dvao")
+
+[node name="Camera3D" type="Camera3D" parent="World/Camera"]
+transform = Transform3D(0.83378, -2.45806e-07, 0.552097, 0.187388, 0.940638, -0.282994, -0.519323, 0.339411, 0.784285, 6.92395, -4.65991, 23.926)
+fov = 33.0
+near = 0.001
+
+[node name="Pivot" parent="World" instance=ExtResource("5_3l45c")]
+transform = Transform3D(-0.982413, 0.104024, 0.155059, 0.146397, 0.944572, 0.293855, -0.115897, 0.311387, -0.943189, 0, 0, 0)
+visible = false
+
+[node name="UISelector" parent="." instance=ExtResource("7_e55yi")]
+offset_left = 271.0
+offset_top = 578.0
+offset_right = 271.0
+offset_bottom = 578.0

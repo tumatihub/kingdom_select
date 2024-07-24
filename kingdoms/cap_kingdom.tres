@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Kingdom" load_steps=2 format=3 uid="uid://dkj88rmb1o13d"]
+
+[ext_resource type="Script" path="res://kingdom.gd" id="1_0vqdy"]
+
+[resource]
+script = ExtResource("1_0vqdy")
+name = "Cap Kingdom"
+x = -39.0
+y = 70.0

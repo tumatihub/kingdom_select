@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Kingdom" load_steps=2 format=3 uid="uid://dvkeqymmc8tvr"]
+
+[ext_resource type="Script" path="res://kingdom.gd" id="1_l2y2i"]
+
+[resource]
+script = ExtResource("1_l2y2i")
+name = "Cascade Kingdom"
+x = -27.0
+y = 77.0

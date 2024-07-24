@@ -1,0 +1,166 @@
+[gd_scene load_steps=7 format=3 uid="uid://bq2dcse70t076"]
+
+[ext_resource type="Script" path="res://kingdom_button.gd" id="1_4n2pq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t568a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_caxuv"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="Animation" id="Animation_0cv2b"]
+resource_name = "select"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer/KingdomButton:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/Label:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.947199, 0.947199, 0.947199, 1), Color(0.303233, 0.303233, 0.303233, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/ColorRect:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.16, 0.16, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lgj82"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer/KingdomButton:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/Label:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/ColorRect:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2bp67"]
+_data = {
+"RESET": SubResource("Animation_lgj82"),
+"select": SubResource("Animation_0cv2b")
+}
+
+[node name="KingdomButtonPivot" type="Control" node_paths=PackedStringArray("button", "animation_player", "name_label")]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.5
+offset_right = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4n2pq")
+button = NodePath("PanelContainer/KingdomButton")
+animation_player = NodePath("AnimationPlayer")
+name_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/Label")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.175
+offset_top = -16.815
+offset_right = 185.825
+offset_bottom = 20.185
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.22173
+pivot_offset = Vector2(20.255, 16.7)
+theme_override_styles/panel = SubResource("StyleBoxEmpty_t568a")
+
+[node name="KingdomButton" type="Button" parent="PanelContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_caxuv")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 45
+theme_override_constants/margin_bottom = 9
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 15
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Kingdom Name"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2bp67")
+}
